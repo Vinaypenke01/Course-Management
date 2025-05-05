@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>{{ course.id|yesno:"Edit Course,Add Course" }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" name="name" value="{{ course.name|default:'' }}" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea name="description" class="form-control">{{ course.description|default:'' }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Duration</label>
+        <textarea name="duration" class="form-control">{{ course.duration|default:'' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
+{% endblock %}

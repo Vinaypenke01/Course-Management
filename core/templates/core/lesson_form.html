@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>{% if lesson.id %}Edit Lesson{% else %}Add Lesson{% endif %}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label>Title</label>
+        <input type="text" name="title" class="form-control" value="{{ lesson.title|default:'' }}" required>
+    </div>
+    
+    <div class="mb-3">
+        <label>Module</label>
+        <select name="module" class="form-control" required>
+            <option disabled selected>Select Module</option>
+            {% for module in modules %}
+                <option value="{{ module.id }}" 
+                    {% if lesson.module and lesson.module.id == module.id %}selected{% endif %}>
+                    {{ module.title }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label>Content</label>
+        <textarea name="content" class="form-control" rows="4">{{ lesson.content|default:'' }}</textarea>
+    </div>
+    
+    <div class="mb-3">
+        <label>Video URL (Optional)</label>
+        <input type="url" name="video_url" class="form-control" value="{{ lesson.video_url|default:'' }}">
+    </div>
+
+    <button class="btn btn-success">Submit</button>
+</form>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>All Modules</h2>
+<a class="btn btn-primary mb-3" href="{% url 'module-create' %}">+ Add Module</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for module in modules %}
+        <tr>
+            <td>{{ module.course_name }}</td>  <!-- Now displays the related course name -->
+            <td>{{ module.title }}</td>
+            <td>{{ module.description }}</td>
+            <td>
+                <a class="btn btn-warning btn-sm" href="{% url 'module-update' module.id %}">Edit</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'module-delete' module.id %}">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4" class="text-center">No modules found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% include 'core/pagination.html' with page_obj=page_obj %}
+{% endblock %}
